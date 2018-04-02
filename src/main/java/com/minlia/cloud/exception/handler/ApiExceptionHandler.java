@@ -12,7 +12,6 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -32,7 +31,7 @@ public class ApiExceptionHandler {
     log.error(e.getMessage(), e);
     FailureResponseBody body = new FailureResponseBody();
     body.setCode(e.getCode());
-    body.setMessage(translateMessage(e.getMessage(),e.getArguments()));
+    body.setMessage(translateMessage(e.getMessage(), e.getArguments()));
     log.debug("Response out: {}",
         JSON.toJSONString(body, SerializerFeature.DisableCircularReferenceDetect));
     HttpResponse.outJson(response, body);
@@ -58,16 +57,15 @@ public class ApiExceptionHandler {
     } else {
       body.setCode(ApiCode.EXCEPTION);
     }
-    body.setMessage(translateMessage(e.getMessage() ));
+    body.setMessage(translateMessage(e.getMessage()));
     log.debug("Response out: {}",
         JSON.toJSONString(body, SerializerFeature.DisableCircularReferenceDetect));
     HttpResponse.outJson(response, body);
   }
 
 
-
-  private String translateMessage(String key,Object ... arguments){
-    return Lang.get(key,arguments);
+  private String translateMessage(String key, Object... arguments) {
+    return Lang.get(key, arguments);
   }
 
 

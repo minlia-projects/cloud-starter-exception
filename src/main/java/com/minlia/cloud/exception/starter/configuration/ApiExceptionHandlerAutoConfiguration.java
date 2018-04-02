@@ -15,7 +15,7 @@ public class ApiExceptionHandlerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public ApiExceptionHandler apiExceptionAdvice(){
+  public ApiExceptionHandler apiExceptionAdvice() {
     return new ApiExceptionHandler();
   }
 
