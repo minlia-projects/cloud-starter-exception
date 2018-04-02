@@ -10,6 +10,7 @@ import com.minlia.cloud.stateful.code.ApiCode;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -27,11 +28,12 @@ public class ApiExceptionHandler {
    * ApiException顶级捕获处理
    */
   @ExceptionHandler(value = {ApiException.class})
-  public void processHttpException(ApiException e, HttpServletResponse response) {
+  public void processApiException(ApiException e, HttpServletResponse response) {
     log.error(e.getMessage(), e);
     FailureResponseBody body = new FailureResponseBody();
     body.setCode(e.getCode());
-    body.setMessage(translateMessage(e.getMessage(), e.getArguments()));
+    body.setStatus(e.getStatus());
+    body.setMessage(translateMessage(e));
     log.debug("Response out: {}",
         JSON.toJSONString(body, SerializerFeature.DisableCircularReferenceDetect));
     HttpResponse.outJson(response, body);
@@ -57,15 +59,43 @@ public class ApiExceptionHandler {
     } else {
       body.setCode(ApiCode.EXCEPTION);
     }
-    body.setMessage(translateMessage(e.getMessage()));
+//    body.setMessage(translateMessage(e.getMessage()));
+    body.setMessage(e.getMessage());
     log.debug("Response out: {}",
         JSON.toJSONString(body, SerializerFeature.DisableCircularReferenceDetect));
     HttpResponse.outJson(response, body);
   }
 
 
-  private String translateMessage(String key, Object... arguments) {
-    return Lang.get(key, arguments);
+  private String translateMessage(ApiException e) {
+    if(e.getTranslateRequired()){
+      //需要翻译
+      String code= convertCode(e.getCode());
+      return Lang.get(code,e.getArguments());
+    }else {
+      return e.getMessage();
+    }
+  }
+
+
+  private static final Class<?> getClassForStatic() {
+    return new Object() {
+      public Class<?> getClassForStatic() {
+        return this.getClass();
+      }
+    }.getClassForStatic();
+  }
+
+
+//  convertCode(String.format("%s%s%s", "ExceptionsApiCode", getClassForStatic().getSimpleName(), code))
+//
+  private  String convertCode(Integer code) {
+    String result="";
+    if (null!=code) {
+      result=  String.format("%s%s%s", "ExceptionsApiCode", getClassForStatic().getSimpleName(), code);
+      result = StringUtils.join(StringUtils.splitByCharacterTypeCamelCase(result), ".").toLowerCase();
+    }
+    return result;
   }
 
 
