@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
  * Response工具类
  *
  * @author lindp
+ * @author will
  * @date 2015/3/27
  */
 public class HttpResponse {

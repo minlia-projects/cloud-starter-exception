@@ -2,7 +2,7 @@ package com.minlia.cloud.exception.handler;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.minlia.cloud.context.Lang;
+import com.minlia.cloud.i18n.Lang;
 import com.minlia.cloud.exception.ApiException;
 import com.minlia.cloud.exception.HttpResponse;
 import com.minlia.cloud.stateful.body.impl.FailureResponseBody;
