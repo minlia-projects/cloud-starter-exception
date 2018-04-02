@@ -1,4 +1,4 @@
-cloud-starter-exceptionApi统一异常处理 
+Api统一异常处理 
 
 ```
 ApiException          Api统一异常
