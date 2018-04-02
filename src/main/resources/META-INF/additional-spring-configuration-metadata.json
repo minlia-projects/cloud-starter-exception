@@ -1,0 +1,25 @@
+{
+  "properties": [
+    {
+      "name": "system.api-exception.handler.enabled",
+      "description": "Is global api exception handler available in our application.",
+      "type": "java.lang.Boolean",
+      "defaultValue": true
+    }
+  ],
+  "hints": [
+    {
+      "name": "system.api-exception.handler.enabled",
+      "values": [
+        {
+          "value": "true",
+          "description": "Enable global api exception handler in our application."
+        },
+        {
+          "value": "false",
+          "description": "Disable global api exception handler in our application."
+        }
+      ]
+    }
+  ]
+}
