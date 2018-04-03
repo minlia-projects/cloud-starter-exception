@@ -17,7 +17,6 @@ public class HttpResponse {
   /**
    * 输出文本格式到客户端
    *
-   * @param str 文本字符串
    */
   public static void outText(HttpServletResponse response, String str) {
     out(response, MediaType.TEXT_PLAIN_VALUE, str);
@@ -25,8 +24,6 @@ public class HttpResponse {
 
   /**
    * 输出json格式到客户端
-   *
-   * @param data json格式字符串
    */
   public static void outJson(HttpServletResponse response, String data) {
     out(response, MediaType.APPLICATION_JSON_UTF8_VALUE, data);
@@ -34,8 +31,6 @@ public class HttpResponse {
 
   /**
    * 输出json格式到客户端
-   *
-   * @param data 待转换成json的对象
    */
   public static void outJson(HttpServletResponse response, Object data) {
     out(response, MediaType.APPLICATION_JSON_UTF8_VALUE, JSON.toJSONString(data));
@@ -56,9 +51,6 @@ public class HttpResponse {
 
   /**
    * 输出指定格式到客户端
-   *
-   * @param contentType 指定格式，可以调用本类中的常量
-   * @param text 指定格式的内容
    */
   public static void out(HttpServletResponse response, String contentType, String text) {
     response.setContentType(contentType);

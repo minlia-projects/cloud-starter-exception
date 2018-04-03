@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * @author user
- * @date 2/24/17
  */
 @ResponseStatus(value = HttpStatus.OK)
 public class ApiException extends NestedRuntimeException {
@@ -21,7 +20,6 @@ public class ApiException extends NestedRuntimeException {
 
   /**
    * 使用自定义的消息内容返回，不需要国际化
-   * @param msg
    */
   public ApiException(String msg) {
     super(msg);
@@ -33,7 +31,6 @@ public class ApiException extends NestedRuntimeException {
 
   /**
    * 使用ApiCode格式化消息后返回，需要国际化
-   * @param code
    */
   public ApiException(Integer code) {
     super(code+"");
@@ -53,44 +50,6 @@ public class ApiException extends NestedRuntimeException {
     this.translateRequired = Boolean.TRUE;
     this.arguments = new Object[]{};
   }
-
-//  public ApiException(int code, String msg) {
-//    super(msg);
-//    this.code = code;
-//    this.status = StatefulBody.FAILURE;
-//    this.translateRequired = Boolean.FALSE;
-//    this.arguments = new Object[]{};
-//  }
-//
-//
-//  public ApiException(int code, String msg, Boolean translateRequired) {
-//    super(msg);
-//    this.code = code;
-//    this.status = StatefulBody.FAILURE;
-//    this.translateRequired = translateRequired;
-//    this.arguments = new Object[]{};
-//  }
-//
-//
-//  public ApiException(int code, String msg, Boolean translateRequired, Object... arguments) {
-//    super(msg);
-//    this.code = code;
-//    this.status = StatefulBody.FAILURE;
-//    this.translateRequired = translateRequired;
-//    this.arguments = arguments;
-//  }
-//
-//  /**
-//   * 添加状态码
-//   */
-//  public ApiException(int code, int status, String msg, Boolean translateRequired,
-//      Object... arguments) {
-//    super(msg);
-//    this.code = code;
-//    this.status = status;
-//    this.translateRequired = translateRequired;
-//    this.arguments = arguments;
-//  }
 
   public ApiException() {
     super(String.format("%s%s", "ExceptionsApiCode", getClassForStatic().getSimpleName()));
