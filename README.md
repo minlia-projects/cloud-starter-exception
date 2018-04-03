@@ -27,6 +27,3 @@ cloud-starter-i18n
   <version>2.0.0.RELEASE</version>
 </dependency>
 ```
-
-
-
