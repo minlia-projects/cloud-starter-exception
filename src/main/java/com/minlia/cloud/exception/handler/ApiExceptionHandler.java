@@ -59,7 +59,6 @@ public class ApiExceptionHandler {
     } else {
       body.setCode(ApiCode.EXCEPTION);
     }
-//    body.setMessage(translateMessage(e.getMessage()));
     body.setMessage(e.getMessage());
     log.debug("Response out: {}",
         JSON.toJSONString(body, SerializerFeature.DisableCircularReferenceDetect));
@@ -87,8 +86,11 @@ public class ApiExceptionHandler {
   }
 
 
-//  convertCode(String.format("%s%s%s", "ExceptionsApiCode", getClassForStatic().getSimpleName(), code))
-//
+  /**
+   *
+   * @param code
+   * @return
+   */
   private  String convertCode(Integer code) {
     String result="";
     if (null!=code) {

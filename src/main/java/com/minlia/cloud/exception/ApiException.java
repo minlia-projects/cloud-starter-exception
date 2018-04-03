@@ -47,7 +47,6 @@ public class ApiException extends NestedRuntimeException {
    * 将http状态也返回出去，需要国际化
    */
   public ApiException(Integer code, int status) {
-//    super(convertCode(String.format("%s%s%s", "ExceptionsApiCode", getClassForStatic().getSimpleName(), code)));
     super(code+"");
     this.code = code;
     this.status = status;

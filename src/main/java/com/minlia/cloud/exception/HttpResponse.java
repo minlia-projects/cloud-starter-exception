@@ -11,7 +11,6 @@ import org.springframework.http.MediaType;
  *
  * @author lindp
  * @author will
- * @date 2015/3/27
  */
 public class HttpResponse {
 
@@ -52,7 +51,6 @@ public class HttpResponse {
     bean.setMessage(msg);
     bean.setPayload(data);
     bean.setStatus(httpStatus);
-//        bean.setUserData(userData);
     outJson(response, bean);
   }
 
