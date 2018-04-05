@@ -43,7 +43,7 @@ public class ApiExceptionHandler {
    * @param e
    * @param response
    */
-  @ExceptionHandler(value = {Exception.class})
+  @ExceptionHandler(value = {Exception.class })
   public void processException(Exception e, HttpServletResponse response) {
     log.error(e.getMessage(), e);
     FailureResponseBody body = new FailureResponseBody();

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 /**
  * @author user
  */
-@ResponseStatus(value = HttpStatus.OK)
+@ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
 public class ApiException extends NestedRuntimeException {
 
   private Integer code;
@@ -19,29 +19,43 @@ public class ApiException extends NestedRuntimeException {
 
 
   /**
-   * 使用自定义的消息内容返回，不需要国际化
+   * 使用自定义的消息内容返回，不需要国际化，不需要参数传入
    */
   public ApiException(String msg) {
     super(msg);
-    this.status =HttpStatus.OK.value();
+    this.status =HttpStatus.EXPECTATION_FAILED.value();
     this.code = StatefulBody.FAILURE;
     this.translateRequired = Boolean.FALSE;
     this.arguments = new Object[]{};
   }
 
   /**
-   * 使用ApiCode格式化消息后返回，需要国际化
+   * 使用ApiCode格式化消息后返回，需要国际化，不需要参数传入
    */
   public ApiException(Integer code) {
     super(code+"");
     this.code = code;
-    this.status = HttpStatus.OK.value();
+    this.status = HttpStatus.EXPECTATION_FAILED.value();
     this.translateRequired = Boolean.TRUE;
     this.arguments = new Object[]{};
   }
 
   /**
-   * 将http状态也返回出去，需要国际化
+   * 使用ApiCode格式化消息后返回，需要国际化，需要参数传入
+   * @param code
+   * @param arguments
+   */
+  public ApiException(Integer code,Object ... arguments) {
+    super(code+"");
+    this.code = code;
+    this.status = HttpStatus.EXPECTATION_FAILED.value();
+    this.translateRequired = Boolean.TRUE;
+    this.arguments = arguments;
+  }
+
+
+  /**
+   * 将http状态也返回出去，需要国际化，不需要参数传入
    */
   public ApiException(Integer code, int status) {
     super(code+"");
@@ -49,6 +63,20 @@ public class ApiException extends NestedRuntimeException {
     this.status = status;
     this.translateRequired = Boolean.TRUE;
     this.arguments = new Object[]{};
+  }
+
+  /**
+   * 将http状态也返回出去，需要国际化，需要传入参数
+   * @param code
+   * @param status
+   * @param arguments
+   */
+  public ApiException(Integer code, int status,Object ... arguments) {
+    super(code+"");
+    this.code = code;
+    this.status = status;
+    this.translateRequired = Boolean.TRUE;
+    this.arguments = arguments;
   }
 
   public ApiException() {
