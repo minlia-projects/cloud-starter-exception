@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.minlia.cloud.exception.starter.configuration.ApiExceptionHandlerAutoConfiguration
+com.minlia.cloud.exception.ApiExceptionHandlerAutoConfiguration

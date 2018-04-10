@@ -83,6 +83,10 @@ public class Intrinsics {
   }
 
 
+
+
+
+
   /**
    * 抛出异常
    */
@@ -91,11 +95,43 @@ public class Intrinsics {
   }
 
   /**
+   * 抛出带错误状态的异常
+   * @param code
+   * @param httpStatus
+   * @param arguments
+   */
+  public static void throwException(Integer code,Integer httpStatus, Object... arguments) {
+    throw new ApiException(code,httpStatus, arguments);
+  }
+
+  /**
    * 抛出异常
    */
   public static void throwException(String code) {
     throw new ApiException(code);
   }
+
+
+
+
+//  /**
+//   * 抛出异常
+//   */
+//  public static void throwAuthenticationException(Integer code, Object... arguments) {
+//    throw new AuthenticationException(code, arguments);
+//  }
+//
+//  /**
+//   * 抛出带错误状态的异常
+//   * @param code
+//   * @param httpStatus
+//   * @param arguments
+//   */
+//  public static void throwAuthenticationException(Integer code,Integer httpStatus, Object... arguments) {
+//    throw new AuthenticationException(code,httpStatus, arguments);
+//  }
+
+
 
 
 }

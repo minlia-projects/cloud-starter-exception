@@ -36,6 +36,11 @@ public class HttpResponse {
     out(response, MediaType.APPLICATION_JSON_UTF8_VALUE, JSON.toJSONString(data));
   }
 
+  public static void outJson(HttpServletResponse response,int status, Object data) {
+    response.setStatus(status);
+    out(response, MediaType.APPLICATION_JSON_UTF8_VALUE, JSON.toJSONString(data));
+  }
+
   /**
    * 输出 HTTP API Json 固定格式到客户端
    */
