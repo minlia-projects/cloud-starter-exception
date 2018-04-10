@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -82,7 +83,7 @@ public class ApiExceptionHandler  implements ProblemHandling {
     body.setMessage(e.getMessage());
     log.debug("Response out: {}",
         JSON.toJSONString(body, SerializerFeature.DisableCircularReferenceDetect));
-    HttpResponse.outJson(response, body);
+    HttpResponse.outJson(response, HttpStatus.OK.value(), body);
   }
 
 
