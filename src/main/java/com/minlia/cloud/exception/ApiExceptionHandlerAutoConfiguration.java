@@ -1,11 +1,13 @@
 package com.minlia.cloud.exception;
 
 import com.minlia.cloud.exception.handler.ApiExceptionHandler;
-import com.minlia.cloud.exception.handler.GlobalExceptionHandler;
+import com.minlia.cloud.exception.handler.RestErrorEndpoint;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.zalando.problem.ProblemModule;
+import org.zalando.problem.validation.ConstraintViolationProblemModule;
 
 /**
  * @author will
@@ -23,9 +25,22 @@ public class ApiExceptionHandlerAutoConfiguration {
 
   @Bean
   @ConditionalOnMissingBean
-  public GlobalExceptionHandler globalExceptionHandler() {
-    return new GlobalExceptionHandler();
+  public RestErrorEndpoint restErrorEndpoint() {
+    return new RestErrorEndpoint();
   }
 
 
+
+  @Bean
+  ProblemModule problemModule() {
+    return new ProblemModule();
+  }
+
+  /*
+   * Module for serialization/deserialization of ConstraintViolationProblem.
+   */
+  @Bean
+  ConstraintViolationProblemModule constraintViolationProblemModule() {
+    return new ConstraintViolationProblemModule();
+  }
 }

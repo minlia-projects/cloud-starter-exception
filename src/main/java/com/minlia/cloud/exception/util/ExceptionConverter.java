@@ -1,4 +1,4 @@
-package com.minlia.cloud.exception;
+package com.minlia.cloud.exception.util;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -9,7 +9,7 @@ public class ExceptionConverter {
    * @param code
    * @return
    */
-  public static String convert(Integer code) {
+  public static String convert(Object code) {
     String result = "";
     if (null != code) {
       result = String

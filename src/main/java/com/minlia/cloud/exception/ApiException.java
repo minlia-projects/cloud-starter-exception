@@ -1,129 +1,80 @@
 package com.minlia.cloud.exception;
 
-import com.minlia.cloud.stateful.body.StatefulBody;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.core.NestedRuntimeException;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import static org.zalando.problem.Status.EXPECTATION_FAILED;
+
+import com.minlia.cloud.exception.util.ExceptionConverter;
+import com.minlia.cloud.exception.util.ProblemType;
+import com.minlia.cloud.i18n.Lang;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.zalando.problem.AbstractThrowableProblem;
+import org.zalando.problem.StatusType;
 
 /**
- * @author user
+ * @author will
  */
-@ResponseStatus(value = HttpStatus.EXPECTATION_FAILED)
-public class ApiException extends NestedRuntimeException {
+public class ApiException extends AbstractThrowableProblem {
 
-  private Integer code;
-  private int status;
-  private Boolean translateRequired;
-  private Object[] arguments;
+  private static final long serialVersionUID = 1L;
+
+  private static final String CODE = "code";
 
 
-  /**
-   * 使用自定义的消息内容返回，不需要国际化，不需要参数传入
-   */
-  public ApiException(String msg) {
-    super(msg);
-    this.status =HttpStatus.EXPECTATION_FAILED.value();
-    this.code = StatefulBody.FAILURE;
-    this.translateRequired = Boolean.FALSE;
-    this.arguments = new Object[]{};
+
+  public ApiException(String code) {
+    super(ProblemType.withCode(code),  EXPECTATION_FAILED.getReasonPhrase(), EXPECTATION_FAILED, null, null, null, toProblemApiCode(code,new Object[]{},
+        LocaleContextHolder.getLocale()));
   }
 
-  /**
-   * 使用ApiCode格式化消息后返回，需要国际化，不需要参数传入
-   */
+  public ApiException(String code,Object [] arguments) {
+    super(ProblemType.withCode(code),  EXPECTATION_FAILED.getReasonPhrase(), EXPECTATION_FAILED, null, null, null, toProblemApiCode(code,arguments,LocaleContextHolder.getLocale()));
+  }
+
+  public ApiException(String code,Object [] arguments,Locale locale) {
+    super(ProblemType.withCode(code),  EXPECTATION_FAILED.getReasonPhrase(), EXPECTATION_FAILED, null, null, null, toProblemApiCode(code,arguments,locale));
+  }
+
+
+
   public ApiException(Integer code) {
-    super(code+"");
-    this.code = code;
-    this.status = HttpStatus.EXPECTATION_FAILED.value();
-    this.translateRequired = Boolean.TRUE;
-    this.arguments = new Object[]{};
-  }
-
-  /**
-   * 使用ApiCode格式化消息后返回，需要国际化，需要参数传入
-   * @param code
-   * @param arguments
-   */
-  public ApiException(Integer code,Object ... arguments) {
-    super(code+"");
-    this.code = code;
-    this.status = HttpStatus.EXPECTATION_FAILED.value();
-    this.translateRequired = Boolean.TRUE;
-    this.arguments = arguments;
+    super(ProblemType.withCode(code),  EXPECTATION_FAILED.getReasonPhrase(), EXPECTATION_FAILED, null, null, null, toProblemApiCode(code, new Object[]{},LocaleContextHolder.getLocale()));
   }
 
 
-  /**
-   * 将http状态也返回出去，需要国际化，不需要参数传入
-   */
-  public ApiException(Integer code, int status) {
-    super(code+"");
-    this.code = code;
-    this.status = status;
-    this.translateRequired = Boolean.TRUE;
-    this.arguments = new Object[]{};
+  public ApiException(Integer code,Object [] arguments) {
+    super(ProblemType.withCode(code),  EXPECTATION_FAILED.getReasonPhrase(), EXPECTATION_FAILED, null, null, null, toProblemApiCode(code,arguments,LocaleContextHolder.getLocale()));
   }
 
-  /**
-   * 将http状态也返回出去，需要国际化，需要传入参数
-   * @param code
-   * @param status
-   * @param arguments
-   */
-  public ApiException(Integer code, int status,Object ... arguments) {
-    super(code+"");
-    this.code = code;
-    this.status = status;
-    this.translateRequired = Boolean.TRUE;
-    this.arguments = arguments;
+
+  public ApiException(Integer code,Object [] arguments,Locale locale) {
+    super(ProblemType.withCode(code),  EXPECTATION_FAILED.getReasonPhrase(), EXPECTATION_FAILED, null, null, null, toProblemApiCode(code,arguments,locale));
   }
 
-  public ApiException() {
-    super(String.format("%s%s", "ExceptionsApiCode", getClassForStatic().getSimpleName()));
+
+
+
+  public ApiException(Integer code, StatusType httpStatus ) {
+    super(ProblemType.withCode(code),  httpStatus.getReasonPhrase(), httpStatus, null, null, null, toProblemApiCode(code, new Object[]{},LocaleContextHolder.getLocale()));
   }
 
-  public ApiException(String msg, Throwable cause) {
-    super(msg, cause);
+  public ApiException(Integer code, StatusType httpStatus, Object[] arguments ) {
+    super(ProblemType.withCode(code),  httpStatus.getReasonPhrase(), httpStatus, null, null, null, toProblemApiCode(code, arguments,LocaleContextHolder.getLocale()));
   }
 
-  private static final Class<?> getClassForStatic() {
-    return new Object() {
-      public Class<?> getClassForStatic() {
-        return this.getClass();
-      }
-    }.getClassForStatic();
+  public ApiException(Integer code, StatusType httpStatus, Object[] arguments,Locale locale) {
+    super(ProblemType.withCode(code),  httpStatus.getReasonPhrase(), httpStatus, null, null, null, toProblemApiCode(code, arguments,locale));
   }
 
-  public int getCode() {
-    return code;
+
+
+
+  public static Map<String, Object> toProblemApiCode(Object code,Object[] arguments,Locale locale) {
+    Map<String, Object> parameters = new HashMap<>();
+    parameters.put("message", Lang.get(ExceptionConverter.convert(code),arguments,locale));
+    parameters.put(CODE, code);
+    return parameters;
   }
 
-  public void setCode(int code) {
-    this.code = code;
-  }
-
-  public int getStatus() {
-    return status;
-  }
-
-  public void setStatus(int status) {
-    this.status = status;
-  }
-
-  public Boolean getTranslateRequired() {
-    return translateRequired;
-  }
-
-  public void setTranslateRequired(Boolean translateRequired) {
-    this.translateRequired = translateRequired;
-  }
-
-  public Object[] getArguments() {
-    return arguments;
-  }
-
-  public void setArguments(Object[] arguments) {
-    this.arguments = arguments;
-  }
 }

@@ -20,6 +20,14 @@
           "description": "Disable global api exception handler in our application."
         }
       ]
+    },{
+      "name": "system.developer.problem-portal-prefix",
+      "values": [
+        {
+          "value": "http://developer.minlia.com/problem/code/",
+          "description": "错误码门户前缀"
+        }
+      ]
     }
   ]
 }
