@@ -2,10 +2,10 @@ package com.minlia.cloud.exception.handler;
 
 import com.minlia.cloud.exception.Intrinsics;
 import com.minlia.cloud.i18n.Lang;
+import com.minlia.cloud.i18n.constant.Constants.LanguageTypes;
 import com.minlia.cloud.stateful.body.StatefulBody;
 import com.minlia.cloud.stateful.body.impl.FailureResponseBody;
-import com.minlia.cloud.stateful.code.ApiCode;
-import com.minlia.cloud.stateful.localization.Constants.LanguageTypes;
+import com.minlia.cloud.i18n.code.ApiCode;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

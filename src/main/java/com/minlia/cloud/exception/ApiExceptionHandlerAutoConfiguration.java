@@ -4,6 +4,7 @@ import com.minlia.cloud.exception.handler.ApiExceptionHandler;
 import com.minlia.cloud.exception.handler.RestErrorEndpoint;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.zalando.problem.ProblemModule;
@@ -16,6 +17,13 @@ import org.zalando.problem.validation.ConstraintViolationProblemModule;
 @ConditionalOnProperty(prefix = "system.api-exception.handler", name = "enabled", havingValue = "true")
 public class ApiExceptionHandlerAutoConfiguration {
 
+  @Bean
+  public Jackson2ObjectMapperBuilderCustomizer problemObjectMapperModules() {
+    return jacksonObjectMapperBuilder -> jacksonObjectMapperBuilder.modules(
+        new ProblemModule(),
+        new ConstraintViolationProblemModule()
+    );
+  }
 
   @Bean
   @ConditionalOnMissingBean
@@ -33,7 +41,9 @@ public class ApiExceptionHandlerAutoConfiguration {
 
   @Bean
   ProblemModule problemModule() {
-    return new ProblemModule();
+    ProblemModule problemModule=new ProblemModule( );
+    problemModule.withStackTraces(false);
+    return problemModule;
   }
 
   /*
