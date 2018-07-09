@@ -106,6 +106,18 @@
 
     <dependency>
       <groupId>org.zalando</groupId>
+      <artifactId>problem</artifactId>
+      <version>0.21.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.zalando</groupId>
+      <artifactId>jackson-datatype-problem</artifactId>
+      <version>0.21.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.zalando</groupId>
       <artifactId>problem-spring-web</artifactId>
       <version>0.23.0</version>
     </dependency>
